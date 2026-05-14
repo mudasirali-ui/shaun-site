@@ -15,7 +15,7 @@ export const NAV_LINKS = [
 export const HERO = {
   eyebrow: 'Industrial Relations | Training | Consulting',
   headline: 'Clear workplace advice with a strategic,',
-  headlineAccent: 'people-first approach',
+  headlineAccent: 'people first approach',
   description:
     'I help organisations navigate complex workplace matters with confidence. From enterprise bargaining and compliance advice to workplace training and stakeholder engagement, I bring strategic thinking and practical execution to every engagement.',
   pills: [
@@ -64,7 +64,7 @@ export const ABOUT = {
 export const SKILLS = [
   {
     title: 'Industrial relations & compliance',
-    body: 'Expert advice across Fair Work Act matters, WHS / OHS obligations, discrimination-related issues, investigations and workplace risk.',
+    body: 'Expert advice across Fair Work Act matters, WHS / OHS obligations, discrimination related issues, investigations and workplace risk.',
     icon: 'shield',
   },
   {
@@ -84,7 +84,7 @@ export const SKILLS = [
   },
   {
     title: 'Research & analytical thinking',
-    body: 'Deep strength in policy, industry and wellbeing research, strategic analysis and evidence-based recommendations.',
+    body: 'Deep strength in policy, industry and wellbeing research, strategic analysis and evidence based recommendations.',
     icon: 'search',
   },
   {
@@ -170,7 +170,7 @@ export const SERVICES = [
   {
     icon: '🤝',
     title: 'Stakeholder & negotiation support',
-    body: 'Support for complex conversations, enterprise matters and multi-stakeholder engagement.',
+    body: 'Support for complex conversations, enterprise matters and multi stakeholder engagement.',
   },
 ];
 

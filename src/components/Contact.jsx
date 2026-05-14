@@ -148,7 +148,7 @@ export default function Contact() {
               </div>
               <div className="contact-info-body">
                 <span className="contact-info-label">Availability</span>
-                <span className="contact-info-value">Mon – Fri, 9am – 5pm AEST</span>
+                <span className="contact-info-value">Mon to Fri, 9am to 5pm AEST</span>
               </div>
             </motion.div>
           </motion.div>
