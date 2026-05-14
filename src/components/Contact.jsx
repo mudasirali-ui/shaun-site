@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from '../hooks/useInView';
 import { CONTACT } from '../data/siteData';
+import { submitContact } from '../api';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -23,16 +24,26 @@ export default function Contact() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
 
-    // Simulate sending (replace with real API call)
-    setTimeout(() => {
-      setStatus('sent');
-      setForm(INITIAL_FORM);
+    try {
+      const res = await submitContact(form);
+      if (res.success) {
+        setStatus('sent');
+        setForm(INITIAL_FORM);
+        setTimeout(() => setStatus('idle'), 4000);
+      } else {
+        setStatus('error');
+        console.error('Contact submission failed:', res.error || res.message);
+        setTimeout(() => setStatus('idle'), 4000);
+      }
+    } catch (err) {
+      setStatus('error');
+      console.error('Contact submission error:', err);
       setTimeout(() => setStatus('idle'), 4000);
-    }, 1200);
+    }
   };
 
   return (
