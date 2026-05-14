@@ -121,17 +121,7 @@ export const EXPERIENCE = [
       'Support investigations and case management with legal and paralegal teams.',
     ],
   },
-  {
-    period: 'Aug 2019 to Mar 2022',
-    role: 'Organiser',
-    company: "Shop, Distributive and Allied Employees' Association",
-    location: 'Adelaide',
-    points: [
-      'Managed up to 20 industrial relations cases at a time.',
-      'Supported 1,000 union members and facilitated delegate training.',
-      'Contributed to enterprise agreement negotiations with favourable outcomes.',
-    ],
-  },
+
   {
     period: 'Sep 2018 to Jul 2019',
     role: 'Organiser',
