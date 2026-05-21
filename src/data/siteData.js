@@ -5,19 +5,18 @@
  */
 
 export const NAV_LINKS = [
-  { label: 'About', to: '/about' },
+  { label: 'About Shaun', to: '/about' },
   { label: 'Skills', to: '/skills' },
-  { label: 'Experience', to: '/experience' },
   { label: 'Training & Consulting', to: '/services' },
   { label: 'Contact', to: '/contact' },
 ];
 
 export const HERO = {
   eyebrow: 'Industrial Relations | Training | Consulting',
-  headline: 'Clear workplace advice with a strategic,',
-  headlineAccent: 'people first approach',
+  headline: 'Clear Workplace Advice &',
+  headlineAccent: 'People Centred Approach',
   description:
-    'I help organisations navigate complex workplace matters with confidence. From enterprise bargaining and compliance advice to workplace training and stakeholder engagement, I bring strategic thinking and practical execution to every engagement.',
+    '“I help organisations navigate complex workplace matters with confidence. From enterprise bargaining and compliance advice to workplace training and engagement, I provide strategic thinking and practical advice to workplace decision makers.”',
   pills: [
     'Fair Work Act advice',
     'WHS / OHS guidance',
@@ -40,10 +39,10 @@ export const HERO = {
 };
 
 export const ABOUT = {
-  tag: 'About Me',
-  heading: 'Strategic, credible and calm under pressure',
+  tag: 'About Shaun',
+  heading: 'Strategic Creative Problem Solving for Business',
   description:
-    'My experience spans industrial relations advisory work, union organising, policy and research capability, operations leadership and facilitation. I combine technical expertise with strong people skills to deliver outcomes that matter.',
+    "Shaun's experience spans industrial relations advisory work, union organising, policy and research capability, operations leadership and facilitation. Shaun combines technical expertise with people skills to deliver consistent outcomes that matter.",
   cards: [
     {
       title: 'What sets me apart',
@@ -148,40 +147,36 @@ export const EXPERIENCE = [
 
 export const SERVICES = [
   {
-    icon: '⚖️',
-    title: 'Industrial relations consulting',
-    body: 'Practical workplace advice, issue triage, risk-aware support and process guidance tailored to your organisation.',
-  },
-  {
     icon: '🎓',
-    title: 'Workplace training',
+    title: 'Industrial Relations Training',
     body: 'Custom sessions for delegates, leaders and teams on rights, obligations and practical workplace capability.',
   },
   {
-    icon: '🤝',
-    title: 'Stakeholder & negotiation support',
-    body: 'Support for complex conversations, enterprise matters and multi stakeholder engagement.',
+    icon: '⚖️',
+    title: 'Industrial Relations Case Management',
+    body: 'Practical workplace advice, issue triage, risk-aware support and process guidance tailored to your organisation.',
   },
 ];
 
 export const PRICING = [
   { label: 'Half day', price: '$500' },
   { label: 'Full day', price: '$800' },
+  { label: 'Weekly rate', price: '$3,000' },
 ];
 
 export const TESTIMONIALS = [
   {
-    quote: 'Shaun provided exceptional guidance through a complex enterprise bargaining process. Her advice was practical, strategic and delivered with confidence.',
+    quote: 'Shaun provided exceptional guidance through a complex enterprise bargaining process. His advice was practical, strategic and delivered with confidence.',
     author: 'Operations Director',
     company: 'Manufacturing Sector',
   },
   {
-    quote: 'The training sessions Shaun delivered for our delegate team were outstanding. She has a rare ability to make complex IR concepts accessible and actionable.',
+    quote: 'The training sessions Shaun delivered for our delegate team were outstanding. He has a rare ability to make complex IR concepts accessible and actionable.',
     author: 'HR Manager',
     company: 'Retail Industry',
   },
   {
-    quote: 'Working with Shaun transformed how we approach workplace compliance. She brings calm authority to high-pressure situations and always delivers results.',
+    quote: 'Working with Shaun transformed how we approach workplace compliance. He brings calm authority to high-pressure situations and always delivers results.',
     author: 'General Manager',
     company: 'Professional Services',
   },
@@ -191,7 +186,8 @@ export const CONTACT = {
   heading: "Let's talk about your workplace, team or training needs",
   description:
     'Based in Melbourne and available for hybrid or online consulting, advisory and training work. I respond within 24 hours.',
-  email: 'shtaliana@gmail.com',
+  email: 'shaun@taliana.com.au',
   phone: '0481 776 855',
-  location: 'Melbourne / Hybrid Online',
+  location: 'Melbourne or Online',
 };
+

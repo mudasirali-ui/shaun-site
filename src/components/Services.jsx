@@ -7,14 +7,10 @@ export default function Services() {
       <div className="container">
         <div className="section-heading">
           <p className="section-tag">Training &amp; Consulting</p>
-          <h2>Services and indicative rates</h2>
-          <p>
-            A simple services section that feels approachable, professional and easy to understand
-            for recruiters, employers and organisations.
-          </p>
+          <h2>Service Rates</h2>
         </div>
 
-        <div className="card-grid three-up">
+        <div className="card-grid two-up" style={{ marginBottom: '40px' }}>
           {SERVICES.map((s) => (
             <article className="service-card" key={s.title}>
               <div className="service-icon">{s.icon}</div>
@@ -38,13 +34,24 @@ export default function Services() {
             <p className="discount-pill">Multiple-day bookings available at a discounted rate.</p>
           </article>
 
-          <article className="rates-card">
-            <h3>Suggested positioning copy</h3>
-            <p>
-              Available for tailored industrial relations consulting, workplace training, stakeholder
-              support and capability-building sessions. Half-day and full-day options are available,
-              with discounted pricing for multi-day engagements.
-            </p>
+          <article className="rates-card brochure-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              <h3>Services Brochure</h3>
+              <p style={{ marginTop: '12px', marginBottom: '24px' }}>
+                Download our comprehensive training and consulting brochure to share with your team or keep for reference.
+              </p>
+            </div>
+            <div style={{ marginTop: 'auto' }}>
+              <a
+                href="/Shaun_Taliana_Brochure.pdf"
+                download="Shaun_Taliana_Brochure.pdf"
+                className="btn btn-primary"
+                id="download-brochure-btn"
+                style={{ width: '100%', display: 'inline-flex', justifyContent: 'center' }}
+              >
+                Training and Consulting Services Brochure
+              </a>
+            </div>
           </article>
         </div>
       </div>

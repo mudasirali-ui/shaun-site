@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { HERO } from '../data/siteData';
-import AnimatedCounter from './AnimatedCounter';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -13,7 +12,7 @@ const fadeUp = {
 };
 
 export default function Hero() {
-  const { eyebrow, headline, headlineAccent, description, pills, card } = HERO;
+  const { eyebrow, headline, headlineAccent, description, pills } = HERO;
 
   return (
     <section className="hero-section" id="home">
@@ -80,7 +79,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Right: Portrait + Stats card */}
+        {/* Right: Portrait */}
         <motion.div
           className="hero-right"
           initial={{ opacity: 0, scale: 0.92 }}
@@ -96,27 +95,6 @@ export default function Hero() {
             />
             <div className="hero-portrait-glow" aria-hidden="true" />
           </div>
-
-          {/* Stats card below portrait */}
-          <aside className="hero-card" aria-label="Professional summary">
-            <div className="hero-card-header">
-              <div className="initials">{card.initials}</div>
-              <div className="hero-card-header-text">
-                <p className="mini-label">{card.miniLabel}</p>
-                <h2>{card.title}</h2>
-              </div>
-            </div>
-            <p className="hero-card-text">{card.text}</p>
-
-            <div className="stats-grid">
-              {card.stats.map(({ value, label }) => (
-                <div className="stat-box" key={label}>
-                  <AnimatedCounter value={value} />
-                  <span>{label}</span>
-                </div>
-              ))}
-            </div>
-          </aside>
         </motion.div>
       </div>
     </section>

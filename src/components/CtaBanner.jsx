@@ -20,7 +20,7 @@ export default function CtaBanner() {
             <h2>Ready to strengthen your workplace strategy?</h2>
             <p>
               Whether you need compliance advice, workplace training or negotiation support,
-              I'm here to help your organisation thrive.
+              Shaun is here to help your organisation thrive.
             </p>
             <div className="cta-banner-actions">
               <Link to="/contact" className="btn btn-primary" id="cta-banner-contact">
