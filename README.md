@@ -1,16 +1,67 @@
-# React + Vite
+# Shaun Taliana — Industrial Relations Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Premium Next.js portfolio for [taliana.com.au](https://www.taliana.com.au/), rebuilt with Framer Motion animations, warm neutral aesthetics, and full responsive support.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Next.js 15** (App Router)
+- **React 19**
+- **Framer Motion** — scroll reveals, staggered lists, page interactions
+- **Google Fonts** — Cormorant Garamond + DM Sans
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+Open [http://localhost:3000](http://localhost:3000).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Production build
+
+```bash
+npm run build
+npm start
+```
+
+Deploy to Vercel with zero config — the framework is auto-detected.
+
+## Pages
+
+| Route       | Content                                      |
+| ----------- | -------------------------------------------- |
+| `/`         | Hero, marquee, testimonials, CTA             |
+| `/about`    | About Shaun, strengths, testimonials, CTA    |
+| `/services` | Services, rates, brochure, testimonials, CTA |
+| `/contact`  | Contact form and details                     |
+
+## Replacing placeholder images
+
+Image placeholders use the `ImagePlaceholder` component. To add your own images:
+
+1. Place files in `public/images/` (e.g. `portrait.jpg`, `about.jpg`)
+2. Pass the `src` prop in the relevant section:
+
+```jsx
+<ImagePlaceholder src="/images/portrait.jpg" alt="Shaun Taliana" aspect="3/4" />
+```
+
+Locations with placeholders:
+
+- **Hero** — `components/sections/Hero.jsx`
+- **About** — `components/sections/AboutSection.jsx`
+- **Services** — `components/sections/ServicesSection.jsx` (service cards + brochure)
+
+## Contact form
+
+The form posts to the existing backend API. Configure in `.env.local`:
+
+```
+NEXT_PUBLIC_API_URL=https://your-api-url
+NEXT_PUBLIC_PROJECT_ID=your-project-id
+```
+
+## Content
+
+All copy is centralised in `lib/siteData.js` for easy updates.
