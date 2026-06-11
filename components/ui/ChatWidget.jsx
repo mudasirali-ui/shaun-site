@@ -51,7 +51,7 @@ export default function ChatWidget() {
         nodes.push(text.slice(lastIndex, idx));
       }
       if (match[2] && match[1]) {
-        // markdown link [label](url) -> styled button link
+        // markdown link [label](url) -> styled button link with icon
         nodes.push(
           <a
             key={`a-${idx}`}
@@ -61,11 +61,16 @@ export default function ChatWidget() {
             className="chat-link-button"
             role="button"
           >
+            <svg aria-hidden width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="chat-link-icon">
+              <path d="M14 3h7v7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M10 14L21 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M21 21H3V3h7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
             {match[1]}
           </a>,
         );
       } else if (match[3]) {
-        // plain url -> styled button link
+        // plain url -> styled button link with icon
         nodes.push(
           <a
             key={`u-${idx}`}
@@ -75,6 +80,11 @@ export default function ChatWidget() {
             className="chat-link-button"
             role="button"
           >
+            <svg aria-hidden width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="chat-link-icon">
+              <path d="M14 3h7v7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M10 14L21 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M21 21H3V3h7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
             {match[3]}
           </a>,
         );
@@ -375,6 +385,7 @@ export default function ChatWidget() {
           margin: 6px 0;
         }
         .chat-link-button:hover { background: #2d2d4e; }
+        .chat-link-button .chat-link-icon { margin-right: 8px; width: 16px; height: 16px; vertical-align: middle; color: #fff; }
 
         .chat-window__input { padding: 10px; border-top: 1px solid #eee; display: flex; gap: 8px; align-items: center; background: #fff; }
         .chat-window__input textarea { flex: 1; resize: none; padding: 10px 12px; border-radius: 8px; border: 1px solid #eee; font-family: inherit; }
