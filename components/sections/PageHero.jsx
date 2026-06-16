@@ -17,9 +17,11 @@ export default function PageHero({ tag, heading, subheading }) {
               {tag}
             </motion.p>
           )}
-          <motion.h1 variants={fadeUp} custom={1}>
-            {heading}
-          </motion.h1>
+          <motion.h1
+            variants={fadeUp}
+            custom={1}
+            dangerouslySetInnerHTML={{ __html: heading }}
+          />
           {subheading && (
             <motion.p className="page-hero__sub" variants={fadeUp} custom={2}>
               {subheading}

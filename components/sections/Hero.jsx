@@ -51,9 +51,11 @@ export default function Hero({ showImage = true }) {
             {HERO.eyebrow}
           </motion.p>
 
-          <motion.h1 variants={fadeUp} custom={1}>
-            {HERO.headline}
-          </motion.h1>
+          <motion.h1
+            variants={fadeUp}
+            custom={1}
+            dangerouslySetInnerHTML={{ __html: HERO.headline }}
+          />
 
           <motion.blockquote className="hero__quote" variants={fadeUp} custom={2}>
             <p>&ldquo;{HERO.quote}&rdquo;</p>
@@ -75,8 +77,8 @@ export default function Hero({ showImage = true }) {
             <button type="button" className="btn-calendly" onClick={openCalendly} id="cta-book-discovery">
               📅 Book a Discovery Call
             </button>
-            <Button href="/#services" variant="primary" id="cta-view-rates">
-              View rates
+            <Button href="/#services" variant="primary" id="cta-explore-services">
+              Explore services
             </Button>
             <Button href="/#contact" variant="secondary" id="cta-book-conversation">
               Book a conversation
@@ -112,6 +114,9 @@ export default function Hero({ showImage = true }) {
                 label="Portrait placeholder"
                 className="hero__portrait"
                 priority
+                hd
+                quality={100}
+                sizes="(max-width: 768px) 90vw, (max-width: 1200px) 42vw, 560px"
               />
             </motion.div>
           </motion.div>

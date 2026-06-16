@@ -16,7 +16,7 @@ export default function CtaBanner() {
           viewport={viewportOnce}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h2>{CTA.heading}</h2>
+          <h2 dangerouslySetInnerHTML={{ __html: CTA.heading }} />
           <p>{CTA.body}</p>
           <div className="cta-banner__actions">
             <Button href={CTA.primary.href} variant="primary">

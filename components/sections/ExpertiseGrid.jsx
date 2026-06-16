@@ -38,7 +38,7 @@ export default function ExpertiseGrid() {
           viewport={viewportOnce}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h2 className="expertise-header__title">{EXPERTISE.heading}</h2>
+          <h2 className="expertise-header__title" dangerouslySetInnerHTML={{ __html: EXPERTISE.heading }} />
           <p className="expertise-header__subtitle">{EXPERTISE.description}</p>
         </motion.div>
 

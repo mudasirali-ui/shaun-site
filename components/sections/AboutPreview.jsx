@@ -65,9 +65,8 @@ export default function AboutPreview() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportOnce}
               transition={{ delay: 0.1, duration: 0.6 }}
-            >
-              {ABOUT.heading}
-            </motion.h3>
+              dangerouslySetInnerHTML={{ __html: ABOUT.heading }}
+            />
 
             <motion.div
               className="about-preview__panels"

@@ -25,6 +25,9 @@ export default function AboutSection({ compact = false }) {
               alt="Shaun Taliana at work"
               aspect="4/5"
               label="About image placeholder"
+              hd
+              quality={100}
+              sizes="(max-width: 768px) 90vw, (max-width: 1200px) 40vw, 480px"
             />
           </motion.div>
 

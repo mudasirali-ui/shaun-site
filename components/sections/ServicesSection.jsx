@@ -1,12 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { SERVICES, RATES, IMAGES } from '@/lib/siteData';
+import { SERVICES, RATES } from '@/lib/siteData';
 import { fadeUp, staggerContainer, viewportOnce } from '@/lib/animations';
 import SectionHeading from '@/components/ui/SectionHeading';
-import ImagePlaceholder from '@/components/ui/ImagePlaceholder';
 
-export default function ServicesSection({ showRates = true, showBrochure = true }) {
+export default function ServicesSection({ showBrochure = true }) {
   return (
     <section className="section section--services" id="services">
       <div className="container">
@@ -32,36 +31,9 @@ export default function ServicesSection({ showRates = true, showBrochure = true 
           ))}
         </motion.div>
 
-        {showRates && (
-          <motion.div
-            className="rates"
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={viewportOnce}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <h3 className="rates__heading">{RATES.heading}</h3>
-            <motion.div
-              className="rates__grid"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportOnce}
-            >
-              {RATES.tiers.map((tier, i) => (
-                <motion.div key={tier.label} className="rates__tier card" variants={fadeUp} custom={i}>
-                  <span className="rates__label">{tier.label}</span>
-                  <span className="rates__amount">{tier.amount}</span>
-                </motion.div>
-              ))}
-            </motion.div>
-            <p className="rates__note">{RATES.note}</p>
-          </motion.div>
-        )}
-
         {showBrochure && (
           <motion.div
-            className="brochure card"
+            className="brochure card brochure--compact"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewportOnce}
@@ -78,14 +50,6 @@ export default function ServicesSection({ showRates = true, showBrochure = true 
                 </svg>
                 {RATES.brochure.label}
               </a>
-            </div>
-            <div className="brochure__visual">
-              <ImagePlaceholder
-                src={IMAGES.brochure}
-                alt="Services brochure preview"
-                aspect="3/4"
-                label="Brochure preview"
-              />
             </div>
           </motion.div>
         )}

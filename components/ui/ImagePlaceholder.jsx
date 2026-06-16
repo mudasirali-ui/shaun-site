@@ -11,13 +11,15 @@ export default function ImagePlaceholder({
   className = '',
   priority = false,
   sizes = '(max-width: 768px) 100vw, 50vw',
+  quality = 92,
+  hd = false,
 }) {
   const ratioStyle = { aspectRatio: aspect };
 
   if (src) {
     return (
       <motion.div
-        className={`image-placeholder image-placeholder--filled ${className}`}
+        className={`image-placeholder image-placeholder--filled${hd ? ' image-placeholder--hd' : ''} ${className}`.trim()}
         style={ratioStyle}
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -29,6 +31,9 @@ export default function ImagePlaceholder({
           className="image-placeholder__img"
           sizes={sizes}
           priority={priority}
+          quality={quality}
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
         />
       </motion.div>
     );

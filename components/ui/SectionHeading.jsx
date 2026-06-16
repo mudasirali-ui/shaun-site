@@ -20,9 +20,11 @@ export default function SectionHeading({ tag, heading, subheading, align = 'left
           {tag}
         </motion.p>
       )}
-      <motion.h2 variants={fadeUp} custom={1}>
-        {heading}
-      </motion.h2>
+      <motion.h2
+        variants={fadeUp}
+        custom={1}
+        dangerouslySetInnerHTML={{ __html: heading }}
+      />
       {subheading && (
         <motion.p className="section-subheading" variants={fadeUp} custom={2}>
           {subheading}
