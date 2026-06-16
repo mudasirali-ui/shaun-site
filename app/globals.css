@@ -424,7 +424,9 @@ h1, h2, h3 {
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  align-self: flex-start;
+  padding-top: 8px;
 }
 
 .hero__visual-glow {
@@ -1324,12 +1326,12 @@ h1, h2, h3 {
 .footer__linkedin {
   display: inline-flex;
   margin-top: 14px;
-  color: var(--accent-light);
+  color: #0077b5;
   transition: color 0.25s ease, transform 0.25s ease;
 }
 
 .footer__linkedin:hover {
-  color: var(--accent-bright);
+  color: #0095e0;
   transform: translateY(-2px);
 }
 

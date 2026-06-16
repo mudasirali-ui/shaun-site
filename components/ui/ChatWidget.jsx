@@ -39,70 +39,158 @@ export default function ChatWidget() {
   const messagesRef = useRef(null);
   const [seen, setSeen] = useState(false);
 
+  // Render inline markdown: **bold**, *italic*, `code`, [link](url)
+  function renderInline(text, keyPrefix) {
+    if (!text) return null;
+    const parts = [];
+    // Combined regex for bold, italic, code, and markdown links
+    const inlineRe = /\*\*(.+?)\*\*|\*(.+?)\*|`([^`]+)`|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s<]+)/g;
+    let last = 0;
+    let m;
+    while ((m = inlineRe.exec(text)) !== null) {
+      if (m.index > last) parts.push(<span key={`${keyPrefix}-t${last}`}>{text.slice(last, m.index)}</span>);
+      if (m[1] !== undefined) {
+        parts.push(<strong key={`${keyPrefix}-b${m.index}`} style={{ fontWeight: '700' }}>{m[1]}</strong>);
+      } else if (m[2] !== undefined) {
+        parts.push(<em key={`${keyPrefix}-i${m.index}`}>{m[2]}</em>);
+      } else if (m[3] !== undefined) {
+        parts.push(<code key={`${keyPrefix}-c${m.index}`} style={{ background: '#f0f0f0', padding: '1px 5px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '0.88em' }}>{m[3]}</code>);
+      } else if (m[5] !== undefined) {
+        parts.push(<a key={`${keyPrefix}-l${m.index}`} href={m[5]} target="_blank" rel="noopener noreferrer" className="chat-link-button">{m[4]}</a>);
+      } else if (m[6] !== undefined) {
+        parts.push(<a key={`${keyPrefix}-u${m.index}`} href={m[6]} target="_blank" rel="noopener noreferrer" className="chat-link-button">{m[6]}</a>);
+      }
+      last = inlineRe.lastIndex;
+    }
+    if (last < text.length) parts.push(<span key={`${keyPrefix}-te`}>{text.slice(last)}</span>);
+    return parts.length ? parts : text;
+  }
+
+  // Parse markdown table
+  function parseTable(lines, keyPrefix) {
+    if (lines.length < 2) return null;
+    const parseRow = (line) => line.replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+    const isSeparator = (line) => /^\|?[\s\-|:]+\|?$/.test(line);
+    const headers = parseRow(lines[0]);
+    if (!isSeparator(lines[1])) return null;
+    const rows = lines.slice(2).map(parseRow);
+    return (
+      <div key={`${keyPrefix}-tbl`} className="chat-table-wrap">
+        <table className="chat-table">
+          <thead>
+            <tr>{headers.map((h, i) => <th key={i}>{renderInline(h, `${keyPrefix}-th${i}`)}</th>)}</tr>
+          </thead>
+          <tbody>
+            {rows.map((row, ri) => (
+              <tr key={ri}>
+                {row.map((cell, ci) => <td key={ci}>{renderInline(cell, `${keyPrefix}-td${ri}-${ci}`)}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
   function formatMessageToNodes(text) {
     if (!text) return null;
-    const nodes = [];
-    const regex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s]+)/g;
-    let lastIndex = 0;
-    let match;
-    while ((match = regex.exec(text)) !== null) {
-      const idx = match.index;
-      if (idx > lastIndex) {
-        nodes.push(text.slice(lastIndex, idx));
+
+    // Split into raw lines
+    const rawLines = text.split(/\r?\n/);
+    const result = [];
+    let i = 0;
+
+    while (i < rawLines.length) {
+      const line = rawLines[i];
+      const trimmed = line.trim();
+
+      // Skip empty lines (add spacing via CSS gap instead)
+      if (trimmed === '') {
+        i++;
+        continue;
       }
-      if (match[2] && match[1]) {
-        // markdown link [label](url) -> styled button link with icon
-        nodes.push(
-          <a
-            key={`a-${idx}`}
-            href={match[2]}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="chat-link-button"
-            role="button"
-          >
-            <svg aria-hidden width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="chat-link-icon">
-              <path d="M14 3h7v7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M10 14L21 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M21 21H3V3h7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            {match[1]}
-          </a>,
+
+      // Headings: ### ## #
+      const hMatch = trimmed.match(/^(#{1,3})\s+(.+)$/);
+      if (hMatch) {
+        const level = hMatch[1].length;
+        const Tag = level === 1 ? 'h3' : level === 2 ? 'h4' : 'h5';
+        result.push(
+          <Tag key={`h-${i}`} className={`chat-heading chat-heading--${level}`}>
+            {renderInline(hMatch[2], `h-${i}`)}
+          </Tag>
         );
-      } else if (match[3]) {
-        // plain url -> styled button link with icon
-        nodes.push(
-          <a
-            key={`u-${idx}`}
-            href={match[3]}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="chat-link-button"
-            role="button"
-          >
-            <svg aria-hidden width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="chat-link-icon">
-              <path d="M14 3h7v7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M10 14L21 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M21 21H3V3h7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            {match[3]}
-          </a>,
-        );
+        i++;
+        continue;
       }
-      lastIndex = regex.lastIndex;
+
+      // Horizontal rule
+      if (/^[-*_]{3,}$/.test(trimmed)) {
+        result.push(<hr key={`hr-${i}`} className="chat-hr" />);
+        i++;
+        continue;
+      }
+
+      // Unordered list: lines starting with - or *
+      if (/^[-*]\s+/.test(trimmed)) {
+        const items = [];
+        while (i < rawLines.length && /^[-*]\s+/.test(rawLines[i].trim())) {
+          items.push(rawLines[i].trim().replace(/^[-*]\s+/, ''));
+          i++;
+        }
+        result.push(
+          <ul key={`ul-${i}`} className="chat-list">
+            {items.map((item, idx) => (
+              <li key={idx}>{renderInline(item, `ul-${i}-${idx}`)}</li>
+            ))}
+          </ul>
+        );
+        continue;
+      }
+
+      // Ordered list: lines starting with 1. 2. etc
+      if (/^\d+\.\s+/.test(trimmed)) {
+        const items = [];
+        while (i < rawLines.length && /^\d+\.\s+/.test(rawLines[i].trim())) {
+          items.push(rawLines[i].trim().replace(/^\d+\.\s+/, ''));
+          i++;
+        }
+        result.push(
+          <ol key={`ol-${i}`} className="chat-list chat-list--ordered">
+            {items.map((item, idx) => (
+              <li key={idx}>{renderInline(item, `ol-${i}-${idx}`)}</li>
+            ))}
+          </ol>
+        );
+        continue;
+      }
+
+      // Markdown table: line starts/ends with |
+      if (trimmed.startsWith('|')) {
+        const tableLines = [];
+        while (i < rawLines.length && rawLines[i].trim().startsWith('|')) {
+          tableLines.push(rawLines[i].trim());
+          i++;
+        }
+        const tbl = parseTable(tableLines, `tbl-${i}`);
+        if (tbl) { result.push(tbl); continue; }
+        // If table parse failed, treat lines as paragraphs
+        tableLines.forEach((tl, ti) => {
+          result.push(<p key={`tp-${i}-${ti}`} className="chat-para">{renderInline(tl, `tp-${i}-${ti}`)}</p>);
+        });
+        continue;
+      }
+
+      // Regular paragraph
+      result.push(
+        <p key={`p-${i}`} className="chat-para">
+          {renderInline(trimmed, `p-${i}`)}
+        </p>
+      );
+      i++;
     }
-    if (lastIndex < text.length) {
-      nodes.push(text.slice(lastIndex));
-    }
-    // replace line breaks with <br /> nodes
-    return nodes.flatMap((n, i) => {
-      if (typeof n !== 'string') return [n];
-      return n.split(/\r?\n/).reduce((acc, part, idx2, arr) => {
-        acc.push(part);
-        if (idx2 < arr.length - 1) acc.push(<br key={`br-${i}-${idx2}`} />);
-        return acc;
-      }, []);
-    });
+
+    return result.length ? result : null;
   }
 
   useEffect(() => {
@@ -202,7 +290,7 @@ export default function ChatWidget() {
           if (willOpen) {
             try {
               localStorage.setItem('taliana_chat_seen', '1');
-            } catch (e) {}
+            } catch (e) { }
             setSeen(true);
           }
         }}
@@ -386,6 +474,30 @@ export default function ChatWidget() {
         }
         .chat-link-button:hover { background: #2d2d4e; }
         .chat-link-button .chat-link-icon { margin-right: 8px; width: 16px; height: 16px; vertical-align: middle; color: #fff; }
+
+        /* Markdown rendered elements */
+        .chat-msg__bubble { display: flex; flex-direction: column; gap: 6px; }
+        .chat-para { margin: 0; line-height: 1.6; font-size: 0.93rem; color: #222; }
+        .chat-msg--user .chat-para { color: #fff; }
+
+        .chat-heading { margin: 2px 0 1px; font-weight: 700; line-height: 1.3; }
+        .chat-heading--1 { font-size: 1.05rem; color: #1a1a2e; border-bottom: 2px solid #e5e5e5; padding-bottom: 4px; }
+        .chat-heading--2 { font-size: 0.97rem; color: #1a1a2e; }
+        .chat-heading--3 { font-size: 0.91rem; color: #333; text-transform: uppercase; letter-spacing: 0.04em; }
+
+        .chat-list { margin: 2px 0; padding-left: 18px; display: flex; flex-direction: column; gap: 3px; }
+        .chat-list li { font-size: 0.93rem; line-height: 1.55; color: #222; }
+        .chat-list--ordered { list-style-type: decimal; }
+        .chat-msg--user .chat-list li { color: #fff; }
+
+        .chat-hr { border: none; border-top: 1px solid #e0e0e0; margin: 4px 0; }
+
+        .chat-table-wrap { overflow-x: auto; width: 100%; margin: 4px 0; border-radius: 6px; border: 1px solid #e0e0e0; }
+        .chat-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+        .chat-table th { background: #1a1a2e; color: #fff; padding: 7px 10px; text-align: left; font-weight: 600; white-space: nowrap; }
+        .chat-table td { padding: 6px 10px; color: #222; border-bottom: 1px solid #f0f0f0; }
+        .chat-table tr:last-child td { border-bottom: none; }
+        .chat-table tr:nth-child(even) td { background: #f8f8f8; }
 
         .chat-window__input { padding: 10px; border-top: 1px solid #eee; display: flex; gap: 8px; align-items: center; background: #fff; }
         .chat-window__input textarea { flex: 1; resize: none; padding: 10px 12px; border-radius: 8px; border: 1px solid #eee; font-family: inherit; }
